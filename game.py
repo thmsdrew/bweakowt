@@ -5,6 +5,13 @@ CAPTION = "Bweakowt"
 SCREEN_SIZE = [640, 480]
 
 
+class Ball(pg.sprite.Sprite):
+    def __init__(self, color, width, height):
+        super(Ball, self).__init__()
+        self.image = pg.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+
 class Scene(object):
     def __init__(self):
         pass
@@ -18,6 +25,11 @@ class Scene(object):
     def handle_events(self, events):
         raise NotImplementedError
 
+class LevelScene(Scene):
+    def __init__(self):
+        super(LevelScene, self).__init__()
+        self.ball = Ball(pg.Color("green"), 5, 5)
+        
 
 class TitleScene(Scene):
     def __init__(self):
@@ -41,7 +53,7 @@ class TitleScene(Scene):
         for e in events:
             if e.type == pg.KEYDOWN:
                 if e.key == pg.K_RETURN:
-                    self.manager.goto(TitleScene())
+                    self.manager.goto(LevelScene(1))
                 elif e.key == pg.K_ESCAPE:
                     pg.quit()
                     sys.exit()
